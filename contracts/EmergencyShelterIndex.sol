@@ -62,20 +62,22 @@ contract EmergencyShelterIndex {
         uint validUntil;
     }
     
+    Emergency[] Emergencies;
+    Shelter[] Shelters;
+    
 
     uint public TotalShelterCount = 0;
-    uint public TotalEmergencies = 0;
+
     
     //emergencyURI => shelterIndex => shelter
     mapping(string => mapping(uint => Shelter)) public ShelterMapping;
     //Shelters per emergency
     mapping(string => uint) ShelterCountByEmergency;
-    
 
     //AddressOfEmergencyManager => Emergencies
     mapping(address => mapping(uint => Emergency)) public EmergencyByManagerByIndex;
     mapping(address => uint) public ManagerEmergencyCount;
-    
+
     //Events
     event newEmergency(
         address indexed emergencyManager,
@@ -105,8 +107,9 @@ contract EmergencyShelterIndex {
         
         uint ManagerEmergencyIndex = ManagerEmergencyCount[msg.sender]++;
         
+        Emergencies.push(emergency);
         EmergencyByManagerByIndex[msg.sender][ManagerEmergencyIndex] = emergency;
-        TotalEmergencies++;
+
         
         emit newEmergency(msg.sender, _emergencyUri, _duration);
     }
@@ -118,12 +121,26 @@ contract EmergencyShelterIndex {
         shelter.owner = msg.sender;
         shelter.shelterUri = _shelterUri;
         shelter.validUntil = _validUntil;
-        
         ShelterMapping[_emergencyUri][ShelterCountByEmergency[_emergencyUri]++] = shelter;
-        TotalShelterCount++;
+        Shelters.push(shelter);
         
         emit newShelter(msg.sender, _shelterUri, _emergencyUri, _validUntil);
     }
+    
+    function getEmergencyCount() public view returns(uint){
+    return Emergencies.length;
+    }
+    
+    function getShelterCount() public view returns (uint){
+        return Shelters.length;
+    }
+    
+    function getEmergency(uint emergencyArrayIndex) public view returns (address, string, uint, uint){
+        Emergency memory emergency = Emergencies[emergencyArrayIndex];
+        return (emergency.owner, emergency.emergencyUri, emergency.durationStart, emergency.durationValid);
+    }
+    
+    function getShelter() public returns (address, string, uint);
     
     
     
