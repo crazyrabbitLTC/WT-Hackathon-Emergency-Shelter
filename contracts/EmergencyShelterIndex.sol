@@ -63,15 +63,12 @@ contract EmergencyShelterIndex {
     }
     
     Emergency[] Emergencies;
-    Shelter[] Shelters;
-    
 
     uint public TotalShelterCount = 0;
-
     
-    //emergencyURI => shelterIndex => shelter
+    //emergencyUri => shelterIndex => shelter
     mapping(string => mapping(uint => Shelter)) public ShelterMapping;
-    //Shelters per emergency
+    //emergencyUri => uint
     mapping(string => uint) ShelterCountByEmergency;
 
     //AddressOfEmergencyManager => Emergencies
@@ -122,7 +119,6 @@ contract EmergencyShelterIndex {
         shelter.shelterUri = _shelterUri;
         shelter.validUntil = _validUntil;
         ShelterMapping[_emergencyUri][ShelterCountByEmergency[_emergencyUri]++] = shelter;
-        Shelters.push(shelter);
         
         emit newShelter(msg.sender, _shelterUri, _emergencyUri, _validUntil);
     }
@@ -131,8 +127,8 @@ contract EmergencyShelterIndex {
     return Emergencies.length;
     }
     
-    function getShelterCount() public view returns (uint){
-        return Shelters.length;
+    function getShelterCount(string _emergencyUri) public view returns (uint){
+        return ShelterCountByEmergency[_emergencyUri];
     }
     
     function getEmergency(uint emergencyArrayIndex) public view returns (address, string, uint, uint){
@@ -140,7 +136,10 @@ contract EmergencyShelterIndex {
         return (emergency.owner, emergency.emergencyUri, emergency.durationStart, emergency.durationValid);
     }
     
-    function getShelter() public returns (address, string, uint);
+    function getShelter(string _emergencyUri, uint _shelterIndex) public returns (address, string, uint){
+        Shelter memory shelter = ShelterMapping[_emergencyUri][_shelterIndex];
+        return (shelter.owner, shelter.shelterUri, shelter.validUntil);
+    }
     
     
     
