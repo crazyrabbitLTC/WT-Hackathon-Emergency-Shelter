@@ -51,57 +51,78 @@ contract EmergencyShelterIndex {
     
     struct Emergency {
         address owner;
-        bytes32 dataUri;
+        string emergencyUri;
         uint durationStart;
         uint durationValid;
     }
 
     struct Shelter {
         address owner;
-        bytes32 dataUri;
-        uint durationStart;
-        uint durationValid;
+        string shelterUri;
+        uint validUntil;
     }
     
-    //Use this to find which "Hotel" is the Shelter.
+
     uint public TotalShelterCount = 0;
-    
     uint public TotalEmergencies = 0;
     
     //emergencyURI => shelterIndex => shelter
-    mapping(bytes32 => mapping(uint => Shelter)) public ShelterMapping;
+    mapping(string => mapping(uint => Shelter)) public ShelterMapping;
+    //Shelters per emergency
+    mapping(string => uint) ShelterCountByEmergency;
+    
 
     //AddressOfEmergencyManager => Emergencies
     mapping(address => mapping(uint => Emergency)) public EmergencyByManagerByIndex;
     mapping(address => uint) public ManagerEmergencyCount;
-
     
+    //Events
+    event newEmergency(
+        address indexed emergencyManager,
+        string emergencyUri,
+        uint duration);
+    
+    event newShelter(
+        address indexed shelterManager,
+        string shelterUri,
+        string emergencyUri,
+        uint duration);
+
     //Set the address of the WindingTreeContract
     constructor(address _WindingTreeContractAddress) public {
         WindingTreeContract = AbstractWTIndex(_WindingTreeContractAddress);
     }
     
-    function createEmergency(bytes32 emergencyUri, uint duration) public {
+    function createEmergency(string _emergencyUri, uint _duration) public {
         Emergency memory emergency;
         
         emergency.owner = msg.sender;
-        emergency.dataUri = emergencyUri;
+        emergency.emergencyUri = _emergencyUri;
         emergency.durationStart = block.timestamp;
-        emergency.durationValid = duration;
+        emergency.durationValid = _duration;
         
-        
+        WindingTreeContract.registerHotel(_emergencyUri);
         
         uint ManagerEmergencyIndex = ManagerEmergencyCount[msg.sender]++;
         
         EmergencyByManagerByIndex[msg.sender][ManagerEmergencyIndex] = emergency;
         TotalEmergencies++;
-
-        //Create 'Hotel' in WT contract
         
+        emit newEmergency(msg.sender, _emergencyUri, _duration);
+    }
+    
+    function createShelter(string _shelterUri, string _emergencyUri, uint _validUntil) public {
         
+        Shelter memory shelter;
         
+        shelter.owner = msg.sender;
+        shelter.shelterUri = _shelterUri;
+        shelter.validUntil = _validUntil;
         
-
+        ShelterMapping[_emergencyUri][ShelterCountByEmergency[_emergencyUri]++] = shelter;
+        TotalShelterCount++;
+        
+        emit newShelter(msg.sender, _shelterUri, _emergencyUri, _validUntil);
     }
     
     
