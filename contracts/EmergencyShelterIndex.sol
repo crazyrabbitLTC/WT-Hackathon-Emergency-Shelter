@@ -51,14 +51,14 @@ contract EmergencyShelterIndex {
     
     struct Emergency {
         address owner;
-        string emergencyUri;
+        bytes32 emergencyUri;
         uint durationStart;
         uint durationValid;
     }
 
     struct Shelter {
         address owner;
-        string shelterUri;
+        bytes32 shelterUri;
         uint validUntil;
     }
     
@@ -67,9 +67,9 @@ contract EmergencyShelterIndex {
     uint public TotalShelterCount = 0;
     
     //emergencyUri => shelterIndex => shelter
-    mapping(string => mapping(uint => Shelter)) public ShelterMapping;
+    mapping(bytes32 => mapping(uint => Shelter)) public ShelterMapping;
     //emergencyUri => uint
-    mapping(string => uint) ShelterCountByEmergency;
+    mapping(bytes32 => uint) ShelterCountByEmergency;
 
     //AddressOfEmergencyManager => Emergencies
     mapping(address => mapping(uint => Emergency)) public EmergencyByManagerByIndex;
@@ -78,13 +78,13 @@ contract EmergencyShelterIndex {
     //Events
     event newEmergency(
         address indexed emergencyManager,
-        string emergencyUri,
+        bytes32 indexed emergencyUri,
         uint duration);
     
     event newShelter(
         address indexed shelterManager,
-        string shelterUri,
-        string emergencyUri,
+        bytes32 indexed shelterUri,
+        bytes32 indexed emergencyUri,
         uint duration);
 
     //Set the address of the WindingTreeContract
@@ -92,7 +92,7 @@ contract EmergencyShelterIndex {
         WindingTreeContract = AbstractWTIndex(_WindingTreeContractAddress);
     }
     
-    function createEmergency(string _emergencyUri, uint _duration) public {
+    function createEmergency(string _emergencyUriString, bytes32 _emergencyUri, uint _duration) public {
         Emergency memory emergency;
         
         emergency.owner = msg.sender;
@@ -100,7 +100,7 @@ contract EmergencyShelterIndex {
         emergency.durationStart = block.timestamp;
         emergency.durationValid = _duration;
         
-        WindingTreeContract.registerHotel(_emergencyUri);
+        WindingTreeContract.registerHotel(_emergencyUriString);
         
         uint ManagerEmergencyIndex = ManagerEmergencyCount[msg.sender]++;
         
@@ -111,10 +111,11 @@ contract EmergencyShelterIndex {
         emit newEmergency(msg.sender, _emergencyUri, _duration);
     }
     
-    function createShelter(string _shelterUri, string _emergencyUri, uint _validUntil) public {
+    function createShelter(bytes32 _shelterUri, bytes32 _emergencyUri, uint _validUntil) public {
         
         Shelter memory shelter;
         
+
         shelter.owner = msg.sender;
         shelter.shelterUri = _shelterUri;
         shelter.validUntil = _validUntil;
@@ -127,19 +128,21 @@ contract EmergencyShelterIndex {
     return Emergencies.length;
     }
     
-    function getShelterCount(string _emergencyUri) public view returns (uint){
+    function getShelterCount(bytes32 _emergencyUri) public view returns (uint){
         return ShelterCountByEmergency[_emergencyUri];
     }
     
-    function getEmergency(uint emergencyArrayIndex) public view returns (address, string, uint, uint){
+    function getEmergency(uint emergencyArrayIndex) public view returns (address, bytes32, uint, uint){
         Emergency memory emergency = Emergencies[emergencyArrayIndex];
         return (emergency.owner, emergency.emergencyUri, emergency.durationStart, emergency.durationValid);
     }
     
-    function getShelter(string _emergencyUri, uint _shelterIndex) public returns (address, string, uint){
+    function getShelter(bytes32 _emergencyUri, uint _shelterIndex) public view returns (address, bytes32, uint){
         Shelter memory shelter = ShelterMapping[_emergencyUri][_shelterIndex];
         return (shelter.owner, shelter.shelterUri, shelter.validUntil);
     }
+    
+    
     
     
     
