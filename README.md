@@ -2,8 +2,13 @@
 WindingTree Hackathon in Prague Oct 24th-25th, 2018. 
 
 Team Name: Emergency Shelter
+------
+
+
 Team Members: 
-Dennison Bertram - dennison@dennisonbertram.com (github: crazyrabbitLTC) and Skylar Weaver - weaver.skylar@gmail.com (github: skylarweaver)
+------
+Dennison Bertram - dennison@dennisonbertram.com (github: crazyrabbitLTC) 
+Skylar Weaver - weaver.skylar@gmail.com (github: skylarweaver)
 
 Project Description: 
 ------
