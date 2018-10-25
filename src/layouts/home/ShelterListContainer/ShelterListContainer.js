@@ -145,7 +145,7 @@ class ShelterListContainer extends Component {
   filterShelterBySelectedTab(shelter) {
     const currAccount = this.props.accounts[0];
     // If tab is on "Your Shelters" and shelter is not owned by "you" return false
-    if (this.props.selectedTab === 2 && shelter.owner !== currAccount) {
+    if ((this.props.selectedTab === 2 || this.props.selectedTab === 3) && shelter.owner !== currAccount) {
       return false;
     }
     return true;

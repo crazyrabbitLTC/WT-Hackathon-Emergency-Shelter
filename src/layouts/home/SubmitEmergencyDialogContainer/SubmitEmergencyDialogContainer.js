@@ -141,16 +141,14 @@ class SubmitEmergencyDialogContainer extends Component {
                   Is there an emergency? 
                   <br></br><br></br>
                   <ol>
-                    <li>Upload a photo</li>
                     <li>Give it a title</li>
                     <li>Add a description</li>
-                    <li>Press Upload to store it on IPFS and save its data on the blockchain</li>
+                    <li>Press Upload to store it on Swarm and save its reference hash on the blockchain</li>
                   </ol>
                   Once the transaction is confirmed by Metamask, you will need to refresh the page manually, due
                   to a currently open Metamask issue with web3 1.0. 
                   <br></br><br></br>
                 </DialogContentText>
-                <FileUploader captureFile={this.captureFile}/>
                 <TextField
                   autoFocus
                   margin="dense"
@@ -177,7 +175,7 @@ class SubmitEmergencyDialogContainer extends Component {
                   margin="dense"
                   id="duration"
                   name="duration"
-                  label="Emergency Duration (Seconds...lol)"
+                  label="Emergency Duration (In seconds...lol)"
                   type="number"
                   fullWidth
                   onChange={this.handleChange}

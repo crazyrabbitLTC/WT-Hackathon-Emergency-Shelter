@@ -189,20 +189,18 @@ class SubmitShelterDialogContainer extends Component {
               onClose={this.handleClose}
               aria-labelledby="form-dialog-title"
             >
-              <DialogTitle id="form-dialog-title">Submit Your Shelter</DialogTitle>
+              <DialogTitle id="form-dialog-title">Submit a Shelter</DialogTitle>
               <DialogContent>
                 <DialogContentText>
                   Now is your chance to help someone in need! Submit your vacant room or extra space as a shelter for someone in need.
                   <br></br><br></br>
                   <ol>
-                    <li>Upload a photo</li>
                     <li>Give it a title</li>
                     <li>Add a description</li>
-                    <li>Press Upload to store it on IPFS and save its data on the blockchain</li>
+                    <li>Press Upload to store it on Swarm and save its reference hash on the blockchain</li>
                   </ol>
                   Once the transaction is confirmed by Metamask, you will need to refresh the page manually, due
-                  to a currently open Metamask issue with web3 1.0.Also ensure you are not behind any firewalls
-                  or proxies in order for the IPFS upload to work.
+                  to a currently open Metamask issue with web3 1.0.
                   <br></br><br></br>
                 </DialogContentText>
                 <TextField

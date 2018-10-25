@@ -27,7 +27,7 @@ class AddShelterButton extends Component {
 
   render() {
     return (
-      <div className="registerHotel-button">
+      <div className="registerHotel-button mt-3">
         <Button variant="fab" color="primary" aria-label="Add" onClick={this.handleAddShelterClick}>
           <AddIcon />
         </Button>
