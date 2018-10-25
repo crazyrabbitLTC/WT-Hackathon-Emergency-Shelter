@@ -2,8 +2,9 @@
 WindingTree Hackathon in Prague Oct 24th-25th, 2018. 
 
 Team Name: Emergency Shelter 
-Recipient of two winning prizes
 ------
+
+Update: We were fortunate enough to win not one, but two prizes at the WindingTree hackathon. We want to extend a big thanks to the WindingTree team, and all participants for such a great experience. 
 
 
 Team Members: 
