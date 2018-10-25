@@ -13,8 +13,11 @@ class ShelterItem extends Component {
     this.state = {
       shelterIdFromParams: this.props.match.params.shelterId,
       shelterIpfs: this.props.shelter ? this.props.shelter.ipfs : '',
-      shelterTitle: this.props.shelter ? this.props.shelter.title : '',
-      shelterDescription: this.props.shelter ? this.props.shelter.description : '',
+      shelterTitle: this.props.shelter ? this.props.shelter.description.name : '',
+      shelterDescription: this.props.shelter ? this.props.shelter.description.description : '',
+      shelterEmail: this.props.shelter ? this.props.shelter.description.contacts.general.email : '',
+      shelterNeighborhood: this.props.shelter ? this.props.shelter.description.address.neighborhood : '',
+      shelterMaxOccupancy: this.props.shelter ? this.props.shelter.description.roomTypes.abcd.occupancy.max : '',
       shelterId: this.props.shelter ? this.props.shelter.id : '',
       shelterUri: this.props.shelter ? this.props.shelter.shelterUri : '',
     };
@@ -63,17 +66,25 @@ class ShelterItem extends Component {
             <p>Sorry! There are no shelters in our system with this id. Please <Link to="/">return home </Link> </p>
             :
             <div>
-              <a target="_blank" href={`http://localhost:8500/bzz-raw:/${this.state.shelterUri}`}>{`http://localhost:8500/bzz-raw:/${this.state.shelterUri}`}</a>
               <img className="w-100" src={this.state.buffer}/>
-              <div className="row d-flex justify-content-between mt-3">
-                <h3 className="ml-3">{this.state.shelterTitle}</h3>
-                {
-                  // Don't render link icon when already on the details page
-                  this.props.match.params.shelterId === undefined &&
-                  renderLinkIcon()
-                }
+              <div className="row d-block mt-3">
+                <div>
+                  <h3 className="shelterTitle ml-3 mb-3">{this.state.shelterTitle}</h3>
+                </div>
+                <div>
+                  <h6 className="ml-3">{this.state.shelterDescription}</h6>
+                </div>
+                <div>
+                  <h6 className="ml-3"><a target="_blank" href={`mailto:${this.state.shelterEmail}`}>{this.state.shelterEmail}</a></h6>
+                </div>
+                <div>
+                  <h6 className="ml-3">{this.state.shelterNeighborhood}</h6>
+                </div>
+                <div>
+                  <h6 className="ml-3">Max Occupancy: {this.state.shelterMaxOccupancy}</h6>
+                </div>
+                <p className="ml-3">Swarm URI: <a target="_blank" href={`http://localhost:8500/bzz-raw:/${this.state.shelterUri}`}>{`http://localhost:8500/bzz-raw:/${this.state.shelterUri}`}</a></p>
               </div>
-              <p>{this.state.shelterDescription}</p>
             </div>
         }
       </div>

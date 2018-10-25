@@ -59,7 +59,7 @@ class SubmitShelterDialogContainer extends Component {
       console.log('Transaction Hash: ', txHash);
     }
     this.setState({ loadingSubmit: false });
-    this.props.history.push('/your-shelter');
+    this.props.history.push('/emergency-one');
   }
 
   handleChange(evt) {
@@ -89,11 +89,62 @@ class SubmitShelterDialogContainer extends Component {
 
   async saveToSwarm(reader) {
     const buffer = Buffer.from(reader.result);
-    const swarmUpload = JSON.stringify({
-      title: this.state.title,
-      description: this.state.description,
-      buffer: buffer,
-    })
+    const swarmUpload = JSON.stringify(
+      {
+        "description": {
+          "name": this.state.title,
+          "description": this.state.description,
+          "location": {
+            "latitude": 50.075388,
+            "longitude": 14.414170
+          },
+          "contacts": {
+            "general": {
+              "email": this.state.contactEmail,
+              "phone": "00420224371111",
+              "url": "https://jirkachadima.cz",
+              "ethereum": "windingtree.eth"
+            }
+          },
+          "address": {
+            "line1": "Rašínovo nábřeží 1981/80",
+            "line2": "Nové Město",
+            "postalCode": "12000",
+            "neighborhood": this.state.neighborhood,
+            "country": "CZ"
+          },
+          "timezone": "Europe/Prague",
+          "currency": "CZK",
+          "amenities": [],
+          "images": [
+            "https://raw.githubusercontent.com/windingtree/media/master/logo-variants/tree/png/tree--gradient-on-white.png",
+            "https://raw.githubusercontent.com/windingtree/media/master/logo-variants/full-logo/png/logo--black-on-green.png"
+          ],
+          "updatedAt": "2018-06-19T15:53:00+0200",
+          "defaultCancellationAmount": 30,
+          "roomTypes": {
+            "abcd": {
+              "name": "string",
+              "description": "string",
+              "totalQuantity": 0,
+              "occupancy": {
+                "min": 1,
+                "max": this.state.maxOccupancy
+              },
+              "amenities": [
+                "TV"
+              ],
+              "images": [
+                "https://raw.githubusercontent.com/windingtree/media/web-assets/logo-variants/full-logo/png/logo--white.png"
+              ],
+              "updatedAt": "2018-06-27T14:59:05.830Z",
+              "properties": {
+                "nonSmoking": "some"
+              }
+            }
+          }
+        }
+      })
     console.log('swarmUpload', swarmUpload);
     try {
       var fileSwarmHash = await swarm.upload(swarmUpload);
@@ -141,9 +192,7 @@ class SubmitShelterDialogContainer extends Component {
               <DialogTitle id="form-dialog-title">Submit Your Shelter</DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  Now is your chance to prove that something exists. Use this application to pseudo-permanently store a photo
-                  on the <Link to='https://ipfs.io/' target='_blank'>Inter-Planetary File System</Link> and save the details
-                  of the photo (including the IPFS link) immutably to the Ethereum blockchain.
+                  Now is your chance to help someone in need! Submit your vacant room or extra space as a shelter for someone in need.
                   <br></br><br></br>
                   <ol>
                     <li>Upload a photo</li>
@@ -156,7 +205,6 @@ class SubmitShelterDialogContainer extends Component {
                   or proxies in order for the IPFS upload to work.
                   <br></br><br></br>
                 </DialogContentText>
-                <FileUploader captureFile={this.captureFile}/>
                 <TextField
                   autoFocus
                   margin="dense"
@@ -176,6 +224,36 @@ class SubmitShelterDialogContainer extends Component {
                   fullWidth
                   multiline
                   rowsMax="4"
+                  onChange={this.handleChange}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="contactEmail"
+                  name="contactEmail"
+                  label="Contact Email"
+                  type="text"
+                  fullWidth
+                  onChange={this.handleChange}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="neighborhood"
+                  name="neighborhood"
+                  label="Neighborhood"
+                  type="neighborhood"
+                  fullWidth
+                  onChange={this.handleChange}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="maxOccupancy"
+                  name="maxOccupancy"
+                  label="Max Occupancy"
+                  type="number"
+                  fullWidth
                   onChange={this.handleChange}
                 />
               </DialogContent>

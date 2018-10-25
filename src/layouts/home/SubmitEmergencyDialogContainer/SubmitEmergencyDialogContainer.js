@@ -64,7 +64,7 @@ class SubmitEmergencyDialogContainer extends Component {
       console.log('Transaction Hash: ', txHash);
     }
     this.setState({ loadingSubmit: false });
-    this.props.history.push('/your-shelter');
+    this.props.history.push('/emergency-one');
   }
 
   handleChange(evt) {

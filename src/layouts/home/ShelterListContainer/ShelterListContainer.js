@@ -145,13 +145,14 @@ class ShelterListContainer extends Component {
   filterShelterBySelectedTab(shelter) {
     const currAccount = this.props.accounts[0];
     // If tab is on "Your Shelters" and shelter is not owned by "you" return false
-    if (this.props.selectedTab === 1 && shelter.owner !== currAccount) {
+    if (this.props.selectedTab === 2 && shelter.owner !== currAccount) {
       return false;
     }
     return true;
   }
 
   async getShelterDataFromSwarmUri(shelterUri) {
+    console.log('HEREEEEEEEEE');
       try {
         const res = await axios.get(`http://localhost:8500/bzz-raw:/${shelterUri}`);
         console.log('res', res.data);
@@ -167,8 +168,8 @@ class ShelterListContainer extends Component {
     });
     return (
       <div>
-        <h1 className="page-title">Shelter</h1>
-        <h2 className="page-subtitle">Subtitle</h2>
+        <h1 className="page-title">Current Emergencies in the World</h1>
+        <h2 className="page-subtitle">Select an emergency to view current shelters and offer your own shelter</h2>
         <TabBar/>
         {
           this.state.hotels.length === 0 ?
@@ -197,7 +198,7 @@ const mapStateToProps = state => {
   return {
     WTIndex: state.contracts.WTIndex,
     Hotel: state.contracts.Hotel,
-    contacts: state.contracts,
+    contracts: state.contracts,
     selectedTab: state.setTabReducer.selectedTab,
     accounts: state.accounts,
   };
