@@ -27,7 +27,9 @@ class AddEmergencyButton extends Component {
 
   render() {
     return (
-      <div className="registerHotel-button">
+      <div className="createEmergency-button">
+        <h4>Submit an Emergency</h4>
+        <br></br>
         <Button variant="fab" color="primary" aria-label="Add" onClick={this.handleAddEmergencyClick}>
           <AddIcon />
         </Button>

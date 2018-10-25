@@ -32,8 +32,8 @@ class Home extends Component {
         <div className="main-content col-md-6 col-sm-10 offset-md-3 p-5">
           <Switch>
             <Route exact path="/" component={ShelterListContainer}/>
-            <Route exact path="/your-shelter" component={ShelterListContainer}/>
-            <Route exact path="/all-shelters" component={ShelterListContainer}/>
+            <Route exact path="/emergency-one" component={ShelterListContainer}/>
+            <Route exact path="/emergency-two" component={ShelterListContainer}/>
             <Route exact path="/shelter/:shelterId" component={ShelterItem}/>
           </Switch>
           <AddShelterButton/>
