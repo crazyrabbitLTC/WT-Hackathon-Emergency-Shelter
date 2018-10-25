@@ -1,7 +1,8 @@
 # WT-Hackathon-Emergency-Shelter
 WindingTree Hackathon in Prague Oct 24th-25th, 2018. 
 
-Team Name: Emergency Shelter
+Team Name: Emergency Shelter 
+Recipient of two winning prizes
 ------
 
 
