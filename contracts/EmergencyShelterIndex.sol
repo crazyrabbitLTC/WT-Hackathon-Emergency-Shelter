@@ -122,7 +122,7 @@ contract EmergencyShelterIndex {
         ShelterMapping[_emergencyUri][ShelterCountByEmergency[_emergencyUri]++] = shelter;
         
         emit newShelter(msg.sender, _shelterUri, _emergencyUri, _validUntil);
-    }
+    }   
     
     function getEmergencyCount() public view returns(uint){
     return Emergencies.length;
