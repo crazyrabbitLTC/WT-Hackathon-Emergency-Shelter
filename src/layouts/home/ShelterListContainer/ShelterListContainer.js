@@ -10,7 +10,6 @@ import TabBar from '../../../components/TabBar/TabBar';
 import ShelterItem from '../../../components/ShelterItem/ShelterItem';
 import axios from 'axios';
 const Hotel = require('../../../../build/contracts/Hotel.json');
-console.log('Hotel', Hotel);
 
 class ShelterListContainer extends Component {
   constructor(props, context) {
@@ -29,28 +28,9 @@ class ShelterListContainer extends Component {
     this.contracts.WTIndex.events.HotelRegistered({/* eventOptions */}, (error, event) => {
       console.log(error, event);
     });
-
-    // this.contracts.WTIndex.events.HotelRegistered({}, { fromBlock: 0, toBlock: 'latest' }).watch((error, event) => {
-    //   // This is called after metamask initiates transaction
-    //   // We take the transaction ID that metamask initiated compare it to that of the new log event to ensure it matches our transaction
-    //   // if (event['transactionHash'] === this.state.transactionHash){
-    //   console.log(event);
-    //   // this.setState({
-    //   // waitingConfirmation: false
-    //   // });
-    //   // }
-    // });
   }
 
   componentDidUpdate(prevProps) {
-    // console.log('this.state.shelters', this.state.shelters);
-    // console.log('this.state.hotels.length', this.state.hotels.length);
-    // console.log('this.state.getHotelsLength', this.state.getHotelsLength);
-    // console.log('--------------------------------------------');
-    // console.log('WTIndex.shelters', this.props.WTIndex.shelters);
-    // if (!Object.is(prevProps.WTIndex.shelters, this.props.WTIndex.shelters)) {
-    // console.log('Object.is(prevProps.WTIndex.shelters, this.props.WTIndex.shelters)', Object.is(prevProps.WTIndex.shelters, this.props.WTIndex.shelters));
-    // }
     // First initialization w/ shelterContract in props
     if (prevProps.WTIndex.initialized === false && this.props.WTIndex.initialized === true) {
       // Get number of shelters so that you can loop through and get each product details
@@ -91,10 +71,6 @@ class ShelterListContainer extends Component {
       });
     }
 
-    //  if (this.props.WTIndex.initialized === true) {
-    //   this.contracts.WTIndex.methods.shelters(0).call().then((shelterData) => {
-    //   });
-    // }
   }
 
   // Get number of shelters so that you can loop through and get each product details

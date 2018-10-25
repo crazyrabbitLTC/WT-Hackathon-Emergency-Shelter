@@ -87,7 +87,7 @@ class SubmitShelterDialogContainer extends Component {
     }
   }
 
-  async saveToIpfs(reader) {
+  async saveToSwarm(reader) {
     const buffer = Buffer.from(reader.result);
     const swarmUpload = JSON.stringify({
       title: this.state.title,
@@ -118,7 +118,7 @@ class SubmitShelterDialogContainer extends Component {
     const blob = new File([this.state.fileContent], this.state.filename, { type: 'image/png' });
     const reader = new window.FileReader();
     reader.onloadend = async () => {
-      await this.saveToIpfs(reader);
+      await this.saveToSwarm(reader);
       this.handleSubmit();
     };
     await reader.readAsArrayBuffer(blob);

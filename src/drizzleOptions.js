@@ -1,3 +1,4 @@
+import EmergencyShelterIndex from './../build/contracts/EmergencyShelterIndex.json'
 import WTIndex from './../build/contracts/WTIndex.json'
 // import Hotel from './../build/contracts/hotel/Hotel.json'
 
@@ -31,12 +32,19 @@ const drizzleOptions = {
   //   },
   // },
   contracts: [
+    EmergencyShelterIndex,
     WTIndex,
     // Hotel,
   ],
   events: {
     WTIndex: {
-      eventName: 'HotelRegistered',
+      eventName: 'registerHotel',
+      eventOptions: {
+        fromBlock: 0, // ideally contract creation block, but listen for events from block '0' to 'latest'
+      },
+    },
+    EmergencyShelterIndex: {
+      eventName: 'newEmergency',
       eventOptions: {
         fromBlock: 0, // ideally contract creation block, but listen for events from block '0' to 'latest'
       },

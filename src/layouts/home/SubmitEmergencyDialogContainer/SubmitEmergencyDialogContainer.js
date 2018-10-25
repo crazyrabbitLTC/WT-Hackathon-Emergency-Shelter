@@ -21,8 +21,6 @@ import Loader from '../../../components/Loader/Loader';
 import SwarmAdapter from '@windingtree/off-chain-adapter-swarm';
 const swarmOptions = { swarmProviderUrl: 'http://localhost:8500' }
 const swarm = new SwarmAdapter(swarmOptions);
-const IpfsApi = window.IpfsApi({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
-
 
 class SubmitEmergencyDialogContainer extends Component {
   constructor(props, context) {
@@ -31,9 +29,11 @@ class SubmitEmergencyDialogContainer extends Component {
       title: '',
       description: '',
       fileSwarmHash: '',
+      duration: 4000000,
       loadingSubmit: false,
     };
     this.contracts = context.drizzle.contracts;
+    this.web3 = context.drizzle.web3;
 
     this.handleChange = this.handleChange.bind(this);
     this.captureFile = this.captureFile.bind(this);
@@ -46,12 +46,17 @@ class SubmitEmergencyDialogContainer extends Component {
   }
 
   async handleSubmit() {
+    console.log('this.state.fileSwarmHash', this.state.fileSwarmHash);
+    console.log('this.state.fileSwarmHash', this.state.fileSwarmHash.slice(35));
+    console.log('this.web3.utils.fromAscii(this.state.fileSwarmHash.slice(10)),', this.web3.utils.fromAscii(this.state.fileSwarmHash.slice(15)));
     // Declare this transaction to be observed. We'll receive the stackId for reference.
-    const stackId = await this.contracts.WTIndex.methods.registerHotel.cacheSend(
+    const stackId = await this.contracts.EmergencyShelterIndex.methods.createEmergency.cacheSend(
       this.state.fileSwarmHash,
+      this.web3.utils.fromAscii(this.state.fileSwarmHash.slice(35)),
+      this.state.duration,
       { from: this.props.accounts[0] },
     );
-    this.contracts.WTIndex.methods.getHotelsLength.cacheCall();
+    this.contracts.EmergencyShelterIndex.methods.getEmergencyCount.cacheCall();
 
     // Use the dataKey to display the transaction status.
     if (this.props.transactionStack[stackId]) {
@@ -87,12 +92,12 @@ class SubmitEmergencyDialogContainer extends Component {
     }
   }
 
-  async saveToIpfs(reader) {
+  async saveToSwarm(reader) {
     const buffer = Buffer.from(reader.result);
     const swarmUpload = JSON.stringify({
       title: this.state.title,
       description: this.state.description,
-      buffer: buffer,
+      duration: this.state.duration,
     })
     try {
       var fileSwarmHash = await swarm.upload(swarmUpload);
@@ -102,14 +107,6 @@ class SubmitEmergencyDialogContainer extends Component {
     } catch(err) {
       console.log(err);
     }
-    // IpfsApi.add(buffer, (err, ipfsHash) => {
-    //   if (err) {
-    //     resolve('resolved');
-    //   }
-    //   // setState by setting ipfsHash to ipfsHash[0].hash
-    //   this.setState({ fileIpfsHash: ipfsHash[0].hash });
-    //   resolve('resolved');
-    // });
   }
 
   async prepareFileForIpfs() {
@@ -118,7 +115,7 @@ class SubmitEmergencyDialogContainer extends Component {
     const blob = new File([this.state.fileContent], this.state.filename, { type: 'image/png' });
     const reader = new window.FileReader();
     reader.onloadend = async () => {
-      await this.saveToIpfs(reader);
+      await this.saveToSwarm(reader);
       this.handleSubmit();
     };
     await reader.readAsArrayBuffer(blob);
@@ -138,12 +135,10 @@ class SubmitEmergencyDialogContainer extends Component {
               onClose={this.handleClose}
               aria-labelledby="form-dialog-title"
             >
-              <DialogTitle id="form-dialog-title">Submit Your Shelter</DialogTitle>
+              <DialogTitle id="form-dialog-title">Submit an Emergency</DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  Now is your chance to prove that something exists. Use this application to pseudo-permanently store a photo
-                  on the <Link to='https://ipfs.io/' target='_blank'>Inter-Planetary File System</Link> and save the details
-                  of the photo (including the IPFS link) immutably to the Ethereum blockchain.
+                  Is there an emergency? 
                   <br></br><br></br>
                   <ol>
                     <li>Upload a photo</li>
@@ -152,8 +147,7 @@ class SubmitEmergencyDialogContainer extends Component {
                     <li>Press Upload to store it on IPFS and save its data on the blockchain</li>
                   </ol>
                   Once the transaction is confirmed by Metamask, you will need to refresh the page manually, due
-                  to a currently open Metamask issue with web3 1.0.Also ensure you are not behind any firewalls
-                  or proxies in order for the IPFS upload to work.
+                  to a currently open Metamask issue with web3 1.0. 
                   <br></br><br></br>
                 </DialogContentText>
                 <FileUploader captureFile={this.captureFile}/>
@@ -162,7 +156,7 @@ class SubmitEmergencyDialogContainer extends Component {
                   margin="dense"
                   id="title"
                   name="title"
-                  label="Shelter Title"
+                  label="Emergency Title"
                   type="title"
                   fullWidth
                   onChange={this.handleChange}
@@ -171,11 +165,21 @@ class SubmitEmergencyDialogContainer extends Component {
                   margin="dense"
                   id="description"
                   name="description"
-                  label="Shelter Description"
+                  label="Emergency Description"
                   type="description"
                   fullWidth
                   multiline
                   rowsMax="4"
+                  onChange={this.handleChange}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="duration"
+                  name="duration"
+                  label="Emergency Duration (Seconds...lol)"
+                  type="number"
+                  fullWidth
                   onChange={this.handleChange}
                 />
               </DialogContent>
