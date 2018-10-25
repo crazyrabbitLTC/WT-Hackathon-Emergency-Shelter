@@ -1,5 +1,18 @@
+<<<<<<< HEAD
 var WTIndex = artifacts.require("WTIndex");
 
 module.exports = function(deployer) {
   deployer.deploy(WTIndex);
+=======
+// var SimpleStorage = artifacts.require("SimpleStorage");
+// var TutorialToken = artifacts.require("TutorialToken");
+// var ComplexStorage = artifacts.require("ComplexStorage");
+var EmergencyShelterIndex = artifacts.require("EmergencyShelterIndex");
+
+module.exports = function(deployer) {
+  // deployer.deploy(SimpleStorage);
+  // deployer.deploy(TutorialToken);
+  // deployer.deploy(ComplexStorage);
+  deployer.deploy(EmergencyShelterIndex);
+>>>>>>> master
 };
