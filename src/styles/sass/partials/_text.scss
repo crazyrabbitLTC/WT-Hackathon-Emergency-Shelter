@@ -1,0 +1,33 @@
+html { font-size: 100%; }
+
+h1,h2,h3,h4,h5,p,li {
+  margin: 0;
+}
+
+h1, .h1 {@include headline();}
+h2, .h2 {@include subheading();}
+h3, .h3 {@include title();}
+h4, .h4 {@include nav();} //
+h5, .h5 {@include caption($weight: $font-weight-bold);}
+p, .p {@include body();}
+// li, .li{@include nav();}
+.login-title, .modal-title {@include headline($font: $font-family-sans-serif, $weight: $font-weight-light);}
+.input-large {@include display();}
+.input-small {@include subheading($font: $font-family-sans-serif);}
+.select-small {@include subheading($font: $font-family-sans-serif);}
+.btn-large {@include subheading($align: $text-align-center, $transform: $text-transform-uppercase, $weight: $font-weight-bold);}
+.btn-small {@include body($align: $text-align-right, $transform: $text-transform-uppercase, $height: 1.8rem, $weight: $font-weight-normal);}
+.btn-link {@include body($align: $text-align-right, $transform: $text-transform-uppercase, $height: 2.4rem, $weight: $font-weight-normal);}
+.user-role {@include subheading($font: $font-family-sans-serif, $align: $text-align-right, $weight: $font-weight-bold);}
+.user-agency {
+  @include body($font: $font-family-sans-serif, $align: $text-align-right, $weight: $font-weight-normal);
+  opacity: 0.6;
+}
+.headline-number {@include headline($font: $font-family-sans-serif, $weight: $font-weight-regular);}
+.page-subtitle {@include subheading($font: $font-family-sans-serif);}
+.nav-link {@include nav();}
+.modal-info {@include subheading($font: $font-family-sans-serif, $weight: $font-weight-light);}
+
+h1, h2, h3, h4, h5, p, .input-large {
+  color: $primary;
+}

@@ -1,0 +1,5 @@
+// These files will be imported into ever scss file via webpack
+// Only put variable and/or mixins here 
+// Otherwise, declarations will be imported into every scss file and will be duplicated
+@import "webpackPartials/colorVars";
+@import "webpackPartials/textMixins";

@@ -144,6 +144,28 @@ module.exports = {
               cacheDirectory: true,
             },
           },
+          // Adding scss capability
+          {
+            test: /\.scss$/,
+            // loader: 'style!css?importLoaders=1!postcss'
+            use: [
+              {loader: 'style-loader'},
+              {loader: 'css-loader', options: { importLoaders: 1 } },
+              { loader: 'postcss-loader', options: {
+                plugins: (loader) => [
+                  require('autoprefixer')
+                ]}
+              },
+              {loader: 'sass-loader', options: {
+                // Change "main" to whichever style sheet is your main stylesheet
+                data: '@import \'webpackSass\';',
+                includePaths: [
+                  // Update path to point to your main stylesheet referenced above
+                  paths.path.join(__dirname, '..', 'src', 'styles', 'sass', 'webpackSassImports')
+                ]}
+              }
+            ]
+          },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
           // "style" loader turns CSS into JS modules that inject <style> tags.

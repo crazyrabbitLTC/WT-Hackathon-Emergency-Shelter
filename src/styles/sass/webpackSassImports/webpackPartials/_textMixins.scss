@@ -1,0 +1,110 @@
+// $font-family-mono:          "Roboto Mono", "Courier New", Courier, monospace;
+$font-family-serif:         "Raleway",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+$font-family-sans-serif:    "Raleway",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+// 
+$text-align-left:     left;
+$text-align-center:   center;
+$text-align-right:    right;
+
+$text-transform-none:       none;
+$text-transform-uppercase:  uppercase;
+$text-transform-lowercase:  lowercase;
+
+$font-weight-light:     300;
+$font-weight-regular:   400;
+$font-weight-medium:    500;
+$font-weight-semibold:  600;
+$font-weight-bold:      700;
+
+$font-size-display:     2.2rem;
+$font-size-headline:    1.8rem;
+$font-size-title:       1.6rem;
+$font-size-subheading:  1.4rem;    
+$font-size-body:        1.0rem;
+$font-size-nav:         1.0rem;
+$font-size-caption:     1.0rem;
+
+$line-height-display:     2.2rem;
+$line-height-headline:    1.8rem;
+$line-height-title:       1.0rem;
+$line-height-subheading:  1.4rem;    
+$line-height-body:        1.4rem;
+$line-height-nav:         0.0rem;
+$line-height-caption:     1.0rem;
+
+//SSN earch Bar 
+@mixin display(
+  $font: $font-family-sans-serif,
+  $align: $text-align-left,
+  $transform: $text-transform-none,
+  $weight: $font-weight-light,
+  $size: $font-size-display,
+  $height: $line-height-display) {
+    font-family: $font; text-align: $align; text-transform: $transform; font-weight: $weight; font-size: $size; line-height: $height;
+}
+
+//Page Title
+@mixin headline(
+  $font: $font-family-sans-serif,
+  $align: $text-align-left,
+  $transform: $text-transform-none,
+  $weight: $font-weight-bold,
+  $size: $font-size-headline,
+  $height: $line-height-headline) {
+    font-family: $font; text-align: $align; text-transform: $transform; font-weight: $weight; font-size: $size; line-height: $height;
+}
+
+//Table Title
+@mixin title(
+  $font: $font-family-sans-serif,
+  $align: $text-align-left,
+  $transform: $text-transform-none,
+  $weight: $font-weight-regular,
+  $size: $font-size-title,
+  $height: $line-height-title) {
+    font-family: $font; text-align: $align; text-transform: $transform; font-weight: $weight; font-size: $size; line-height: $height;
+}
+
+//Table Subtitle, Tab Title, Large Button, Regular Search/Input, Notification Profile
+@mixin subheading(
+  $font: $font-family-sans-serif,
+  $align: $text-align-left,
+  $transform: $text-transform-none,
+  $weight: $font-weight-regular,
+  $size: $font-size-subheading,
+  $height: $line-height-subheading) {
+    font-family: $font; text-align: $align; text-transform: $transform; font-weight: $weight; font-size: $size; line-height: $height;
+}
+
+//small button text, notification subject
+@mixin body(
+  $font: $font-family-sans-serif,
+  $align: $text-align-left,
+  $transform: $text-transform-none,
+  $weight: $font-weight-bold,
+  $size: $font-size-body,
+  $height: $line-height-body) {
+    font-family: $font; text-align: $align; text-transform: $transform; font-weight: $weight; font-size: $size; line-height: $height;
+}
+
+//sidenav menu items
+@mixin nav(
+  $font: $font-family-sans-serif,
+  $align: $text-align-right,
+  $transform: $text-transform-uppercase,
+  $weight: $font-weight-bold,
+  $size: $font-size-nav,
+  $height: $line-height-nav) {
+    font-family: $font; text-align: $align; text-transform: $transform; font-weight: $weight; font-size: $size; line-height: $height;
+}
+
+//table header, table body, card title, card body
+@mixin caption(
+  $font: $font-family-sans-serif,
+  $align: $text-align-left,
+  $transform: $text-transform-none,
+  $weight: $font-weight-regular,
+  $size: $font-size-caption,
+  $height: $line-height-caption) {
+    font-family: $font; text-align: $align; text-transform: $transform; font-weight: $weight; font-size: $size; line-height: $height;
+}

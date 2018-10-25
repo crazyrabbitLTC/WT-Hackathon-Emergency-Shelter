@@ -1,0 +1,51 @@
+#root {
+  min-height: 100%;
+}
+
+.main-content {
+  margin-top: 55px;
+}
+
+.page-title {
+  margin-bottom: 1.9rem;
+}
+
+.page-subtitle {
+  margin-bottom: 2.8rem;
+}
+.header{
+  .navbar-brand {
+    font-size: 2rem;
+    line-height: 1.5rem;
+  }
+  .header-navbar {
+    background-color: $darker;
+  }
+}
+
+.nav-tabs {
+  border: none;
+  box-shadow: inset 0px -0.6rem 0 0 #EEEEEE;
+  margin-bottom: 3.0rem;
+  .nav-item {
+    margin: 0;
+    .nav-link {
+      padding-top: 0;
+      border: none;
+      height: 2.3rem;
+      color: $darker;
+      border-bottom: 0.6rem solid #EEEEEE;
+      &:hover {
+        color: $active;
+      }
+      &.active {
+        color: $active;
+        border-bottom: 0.6rem solid $active;
+      }
+    }
+  }
+}
+
+.loadingIndicator{
+  margin-top: 40%;
+}

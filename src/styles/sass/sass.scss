@@ -1,0 +1,24 @@
+// Global stylesheet to import all other scss partials
+// Only place declarations here
+// You should place any variables or mixins in the webpackSassImports so they are imported into every sass file
+
+@import 'node_modules/bootstrap/scss/functions';
+
+// $theme-colors: (
+//   "primary": #3E61DB,
+//   "secondary": #1A369A,
+//   "active": #7436EB,
+//   "danger": #FC5231,
+//   "success": #5CE67B,
+//   "light": #F4F4F4,
+//   "darker": #444444,
+//   "white": #fff,
+//   "black": #000
+// );
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+@import "partials/colors";
+@import "partials/text";
+@import "partials/layout";
+@import "partials/submitProofButton";

@@ -1,26 +1,48 @@
-import ComplexStorage from './../build/contracts/ComplexStorage.json'
-import SimpleStorage from './../build/contracts/SimpleStorage.json'
-import TutorialToken from './../build/contracts/TutorialToken.json'
+import WTIndex from './../build/contracts/WTIndex.json'
+// import Hotel from './../build/contracts/hotel/Hotel.json'
+
+// const drizzleOptions = {
+//   web3: {
+//     block: false,
+//     fallback: {
+//       type: 'ws',
+//       url: 'ws://127.0.0.1:8545'
+//     }
+//   },
+//   contracts: [
+//     ComplexStorage,
+//     SimpleStorage,
+//     TutorialToken
+//   ],
+//   events: {
+//     SimpleStorage: ['StorageSet']
+//   },
+//   polls: {
+//     accounts: 1500
+//   }
+// }
 
 const drizzleOptions = {
-  web3: {
-    block: false,
-    fallback: {
-      type: 'ws',
-      url: 'ws://127.0.0.1:8545'
-    }
-  },
+  // web3: {
+  //   block: false,
+  //   fallback: {
+  //     type: 'ws',
+  //     url: 'ws://127.0.0.1:754',
+  //   },
+  // },
   contracts: [
-    ComplexStorage,
-    SimpleStorage,
-    TutorialToken
+    WTIndex,
+    // Hotel,
   ],
   events: {
-    SimpleStorage: ['StorageSet']
+    WTIndex: {
+      eventName: 'HotelRegistered',
+      eventOptions: {
+        fromBlock: 0, // ideally contract creation block, but listen for events from block '0' to 'latest'
+      },
+    },
   },
-  polls: {
-    accounts: 1500
-  }
-}
+  polls: {},
+};
 
 export default drizzleOptions

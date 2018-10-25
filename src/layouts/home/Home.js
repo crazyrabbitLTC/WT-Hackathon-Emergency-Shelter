@@ -1,60 +1,51 @@
-import React, { Component } from 'react'
-import { AccountData, ContractData, ContractForm } from 'drizzle-react-components'
-import logo from '../../logo.png'
+// Import React Modules
+import React, { Component } from 'react';
+import { Route, withRouter, Switch } from 'react-router-dom';
+import { drizzleConnect } from 'drizzle-react';
+
+// Import Scenes
+import ShelterListContainer from './ShelterListContainer/ShelterListContainer';
+import SubmitShelterDialogContainer from './SubmitShelterDialogContainer/SubmitShelterDialogContainer';
+import SubmitEmergencyDialogContainer from './SubmitEmergencyDialogContainer/SubmitEmergencyDialogContainer';
+
+// Import Components
+import Header from '../../components/Header/Header';
+import AddShelterButton from '../../components/AddShelterButton/AddShelterButton';
+import AddEmergencyButton from '../../components/AddEmergencyButton/AddEmergencyButton';
+import ShelterItem from '../../components/ShelterItem/ShelterItem';
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.handleAddShelterClick = this.handleAddShelterClick.bind(this);
+  }
+
+  handleAddShelterClick() {
+    console.log('Clicked');
+  }
+
   render() {
     return (
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1 header">
-            <img src={logo} alt="drizzle-logo" />
-            <h1>Drizzle Examples</h1>
-            <p>Examples of how to get started with Drizzle in various situations.</p>
-
-            <br/><br/>
-          </div>
-
-          <div className="pure-u-1-1">
-            <h2>Active Account</h2>
-            <AccountData accountIndex="0" units="ether" precision="3" />
-
-            <br/><br/>
-          </div>
-
-          <div className="pure-u-1-1">
-            <h2>SimpleStorage</h2>
-            <p>This shows a simple ContractData component with no arguments, along with a form to set its value.</p>
-            <p><strong>Stored Value</strong>: <ContractData contract="SimpleStorage" method="storedData" /></p>
-            <ContractForm contract="SimpleStorage" method="set" />
-
-            <br/><br/>
-          </div>
-
-          <div className="pure-u-1-1">
-            <h2>TutorialToken</h2>
-            <p>Here we have a form with custom, friendly labels. Also note the token symbol will not display a loading indicator. We've suppressed it with the <code>hideIndicator</code> prop because we know this variable is constant.</p>
-            <p><strong>Total Supply</strong>: <ContractData contract="TutorialToken" method="totalSupply" methodArgs={[{from: this.props.accounts[0]}]} /> <ContractData contract="TutorialToken" method="symbol" hideIndicator /></p>
-            <p><strong>My Balance</strong>: <ContractData contract="TutorialToken" method="balanceOf" methodArgs={[this.props.accounts[0]]} /></p>
-            <h3>Send Tokens</h3>
-            <ContractForm contract="TutorialToken" method="transfer" labels={['To Address', 'Amount to Send']} />
-
-            <br/><br/>
-          </div>
-
-          <div className="pure-u-1-1">
-            <h2>ComplexStorage</h2>
-            <p>Finally this contract shows data types with additional considerations. Note in the code the strings below are converted from bytes to UTF-8 strings and the device data struct is iterated as a list.</p>
-            <p><strong>String 1</strong>: <ContractData contract="ComplexStorage" method="string1" toUtf8 /></p>
-            <p><strong>String 2</strong>: <ContractData contract="ComplexStorage" method="string2" toUtf8 /></p>
-            <strong>Single Device Data</strong>: <ContractData contract="ComplexStorage" method="singleDD" />
-
-            <br/><br/>
-          </div>
+      <div className="row h-100">
+        <Header/>
+        <AddEmergencyButton/>
+        <div className="main-content col-md-6 col-sm-10 offset-md-3 p-5">
+          <Switch>
+            <Route exact path="/" component={ShelterListContainer}/>
+            <Route exact path="/your-shelter" component={ShelterListContainer}/>
+            <Route exact path="/all-shelters" component={ShelterListContainer}/>
+            <Route exact path="/shelter/:shelterId" component={ShelterItem}/>
+          </Switch>
+          <AddShelterButton/>
+          <SubmitShelterDialogContainer/>
+          <SubmitEmergencyDialogContainer/>
         </div>
-      </main>
-    )
+      </div>
+    );
   }
 }
 
-export default Home
+// Basically: pass redux's global state into this component as props
+// Using withRouter due to this issue:
+// https://stackoverflow.com/questions/43895805/react-router-4-does-not-update-view-on-link-but-does-on-refresh
+export default withRouter(drizzleConnect(Home));

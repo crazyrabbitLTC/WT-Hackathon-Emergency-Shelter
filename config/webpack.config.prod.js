@@ -144,6 +144,30 @@ module.exports = {
               compact: true,
             },
           },
+          // Adding capability for scss
+          {
+            test: /\.scss$/,
+            use: ExtractTextPlugin.extract({
+              fallback: "style-loader",
+              use: [
+                { loader: 'css-loader', options: { importLoaders: 1 } },
+                { loader: 'postcss-loader', options: {
+                  plugins: (loader) => [
+                    // require('postcss-smart-import'),
+                    require('autoprefixer')
+                  ]
+                  }   
+                },
+                {loader: 'sass-loader', options: {
+                  data: '@import \'webpackSass\';',
+                  includePaths: [
+                    // Update path to point to your main stylesheet referenced above
+                    paths.path.join(__dirname, '..', 'src', 'styles', 'sass', 'webpackSassImports')
+                  ]}
+                },
+              ]
+            })
+          },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
