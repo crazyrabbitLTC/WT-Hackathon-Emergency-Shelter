@@ -17,6 +17,8 @@ Project Description:
 
 Across the world, the increasing frequency and intensity of natural and human made disasters in the form of SuperStorms, Earthquakes and war means an increasing number of people are left homeless and in urgent need of emergency shelter. 
 
+Here is a screencast of our Emergency Shelter Index in action: [Emergency Shelter Index Screencast](https://drive.google.com/open?id=1ep1NnPIL--MOVFMaKyhUbpz9e75_cmSX)
+
 Problem:
 ------
 
